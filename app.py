@@ -34,6 +34,8 @@ if "page" not in st.session_state:
 
 if "prediction" not in st.session_state:
     st.session_state.prediction = ""
+if "confidence" not in st.session_state:
+    st.session_state.confidence = 0    
 
 if st.session_state.page == "home":
 
@@ -84,12 +86,14 @@ if st.session_state.page == "home":
             yes_no[domestic],
             yes_no[catsize]
         ]])
-
         prediction = model.predict(data)[0]
 
+        confidence = np.max(model.predict_proba(data)) * 100
+        
         st.session_state.prediction = class_names[prediction]
+        st.session_state.confidence = confidence
         st.session_state.page = "result"
-
+        
         st.rerun()
 
 
@@ -98,6 +102,7 @@ if st.session_state.page == "result":
     st.title("🎯 Prediction Result")
 
     st.success(f"Predicted Animal Class: {st.session_state.prediction}")
+    st.metric("Prediction Confidence",f"{st.session_state.confidence:.2f}%")
 
     st.info(descriptions[st.session_state.prediction])
 
