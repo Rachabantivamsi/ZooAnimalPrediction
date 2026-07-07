@@ -3,7 +3,7 @@ import joblib
 import numpy as np
 
 # Load trained model
-model = joblib.load("zoo_model(gini).pkl")
+model = joblib.load("zoo_random_forest.pkl")
 
 # Convert Yes/No to 1/0
 yes_no = {
