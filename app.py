@@ -3,6 +3,21 @@ import joblib
 import numpy as np
 
 model = joblib.load("zoo_random_forest.pkl")
+st.sidebar.title("🦁 Zoo Animal Prediction")
+
+st.sidebar.markdown("""
+### About Project
+
+**Model:** Random Forest Classifier
+
+**Dataset:** Zoo Dataset
+
+**Features:** 16
+
+**Animal Classes:** 7
+
+""")
+
 
 yes_no = {
     "Yes": 1,
@@ -10,23 +25,32 @@ yes_no = {
 }
 
 class_names = {
-    1: "🐘 Mammal",
-    2: "🐦 Bird",
-    3: "🐍 Reptile",
-    4: "🐟 Fish",
-    5: "🐸 Amphibian",
-    6: "🐞 Bug",
-    7: "🦑 Invertebrate"
+    1: "Mammal",
+    2: "Bird",
+    3: "Reptile",
+    4: "Fish",
+    5: "Amphibian",
+    6: "Bug",
+    7: "Invertebrate"
 }
 
 descriptions = {
-    "🐘 Mammal": "Warm-blooded animals that produce milk and usually have hair.",
-    "🐦 Bird": "Animals with feathers, wings and most lay eggs.",
-    "🐍 Reptile": "Cold-blooded vertebrates with scales.",
-    "🐟 Fish": "Aquatic animals with fins and gills.",
-    "🐸 Amphibian": "Animals that live both on land and in water.",
-    "🐞 Bug": "Small six-legged invertebrates such as insects.",
-    "🦑 Invertebrate": "Animals without a backbone."
+    "Mammal": "Warm-blooded animals that produce milk and usually have hair.",
+    "Bird": "Animals with feathers, wings and most lay eggs.",
+    "Reptile": "Cold-blooded vertebrates with scales.",
+    "Fish": "Aquatic animals with fins and gills.",
+    "Amphibian": "Animals that live both on land and in water.",
+    "Bug": "Small six-legged invertebrates such as insects.",
+    "Invertebrate": "Animals without a backbone."
+}
+images = {
+    "Mammal": "images/mammal.png",
+    "Bird": "images/bird.png",
+    "Reptile": "images/reptile.png",
+    "Fish": "images/fish.png",
+    "Amphibian": "images/amphibian.png",
+    "Bug": "images/bug.png",
+    "Invertebrate": "images/invertebrate.png"
 }
 
 if "page" not in st.session_state:
@@ -103,6 +127,7 @@ if st.session_state.page == "result":
 
     st.success(f"Predicted Animal Class: {st.session_state.prediction}")
     st.metric("Prediction Confidence",f"{st.session_state.confidence:.2f}%")
+    st.image(images[st.session_state.prediction], use_container_width=True)
 
     st.info(descriptions[st.session_state.prediction])
 
